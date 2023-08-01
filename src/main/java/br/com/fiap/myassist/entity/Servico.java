@@ -8,19 +8,19 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-
-@Table(name="TBL_SERVICO")
+@Entity
+@Table(name = "TBL_SERVICO")
 public class Servico {
 
     @Id
-    @Column(name="ID_EQUIPAMENTO")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "ID_SERVICO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="TX_DESCRICAO")
+    @Column(name = "TX_DESCRICAO")
     private String descricao;
 
-    @Column(name="NR_VALOR")
+    @Column(name = "NR_VALOR")
     private BigDecimal valor;
 
 }

@@ -11,13 +11,13 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class Pessoa {
 
-    @Column(name="TX_NOME")
+    @Column(name = "TX_NOME")
     protected String nome;
 
     @Embedded
     protected Telefone telefone;
 
-    @Column(name="TX_EMAIL")
+    @Column(name = "TX_EMAIL")
     protected String email;
 
 }

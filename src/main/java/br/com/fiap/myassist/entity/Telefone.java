@@ -1,7 +1,10 @@
 package br.com.fiap.myassist.entity;
 
 import br.com.fiap.myassist.enums.TipoTelefoneEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,16 +13,14 @@ import lombok.Setter;
 @Embeddable
 public class Telefone {
 
-    @Column(name="TX_AREA_FONE")
+    @Column(name = "TX_AREA_FONE")
     private String area;
 
-    @Column(name="TX_FONE")
+    @Column(name = "TX_FONE")
     private String numero;
 
-    @Column(name="TX_TIPO_FONE")
+    @Column(name = "TX_TIPO_FONE")
     @Enumerated(EnumType.STRING)
     private TipoTelefoneEnum tipo;
 
 }
-
-
