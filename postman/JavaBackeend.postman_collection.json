@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "d351ee40-87d7-44e6-bf57-7920e9244c9d",
+		"name": "JavaBackeend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6644033"
+	},
+	"item": [
+		{
+			"name": "servicos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/servicos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"servicos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Servicos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Post Servicos Copy",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

@@ -1,12 +1,17 @@
 package br.com.fiap.myassist;
 
 import br.com.fiap.myassist.entity.Equipamento;
+import br.com.fiap.myassist.entity.Servico;
 import br.com.fiap.myassist.enums.TipoEquipamentoEnum;
 import br.com.fiap.myassist.repository.EquipamentoRepository;
+import br.com.fiap.myassist.repository.OrdemServicoRepository;
+import br.com.fiap.myassist.repository.ServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.math.BigDecimal;
 import java.util.Optional;
 
 
@@ -19,26 +24,20 @@ public class MyAssistApplication implements CommandLineRunner {
 
 	@Autowired
 	EquipamentoRepository equipamentoRepository;
+	@Autowired
+	ServicoRepository servicoRepository;
+
+	@Autowired
+	OrdemServicoRepository ordemServicoRepository;
 
 
 	@Override
 	public void run(String... args) throws Exception {
 
-		var resultado = equipamentoRepository.findEquipamentoByTipoEquals(TipoEquipamentoEnum.NOTEBOOK);
-		//Optional<Equipamento> equipamento = equipamentoRepository.findById(24L);
+		var resultado = servicoRepository.findByValorGreaterThanEqual(new BigDecimal(("80")));
+		resultado.forEach(e -> System.out.println(e.getDescricao()));
 
-		// equipamento.setTipo(TipoEquipamentoEnum.NOTEBOOK);
-		//equipamento.setModelo("latitude 3400");
-		//equipamento.setMarca("DELL");
-		//equipamento.setNumeroSerie("XYZ122");
+		System.out.println(ordemServicoRepository.countConcluidas());
 
-		//equipamentoRepository.save(equipamento);
-		//equipamentoRepository.findById((long)22 );
-
-		for(Equipamento e: resultado) {
-
-
-			System.out.println("Equipamento " + e.getId().toString() + " ID=" + e.getMarca() );
-		}
 	}
 }
