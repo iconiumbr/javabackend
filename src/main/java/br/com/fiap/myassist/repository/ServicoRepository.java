@@ -11,4 +11,6 @@ public interface ServicoRepository extends JpaRepository<Servico,Long> {
 
     List<Servico> findByValorGreaterThanEqual(BigDecimal Valor);
 
+    List<Servico> findByDescricaoIgnoreCase(String descricao);
+
 }

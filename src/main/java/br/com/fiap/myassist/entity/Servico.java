@@ -1,6 +1,7 @@
 package br.com.fiap.myassist.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message="Campo Descrição é obrigatorio")
     @Column(name = "TX_DESCRICAO")
     private String descricao;
 
