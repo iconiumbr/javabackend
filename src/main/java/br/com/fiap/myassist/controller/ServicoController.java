@@ -1,8 +1,10 @@
 package br.com.fiap.myassist.controller;
 
+import br.com.fiap.myassist.dto.ServicoInsertDTO;
 import br.com.fiap.myassist.dto.ServicoResponseDTO;
 import br.com.fiap.myassist.entity.Servico;
 import br.com.fiap.myassist.repository.ServicoRepository;
+import br.com.fiap.myassist.service.ServicoService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,61 +18,47 @@ import java.util.List;
 public class ServicoController {
 
     @Autowired
-    private ServicoRepository servicoRepository;
+    private ServicoService servicoService;
+
     private ModelMapper mapper = new ModelMapper();
 
-
     @GetMapping
-    public List<Servico> findAll() {
-        return servicoRepository.findAll();
+    public List<ServicoResponseDTO> findAll() {
+
+        return servicoService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ServicoResponseDTO> findById(@PathVariable Long id) {
 
-        var resultado = servicoRepository.findById(id);
+        var resultado = servicoService.findById(id);
         if(resultado.isEmpty()) return ResponseEntity.notFound().build();
 
-        var conteudo = resultado.get();
-        var response = mapper.map(conteudo, ServicoResponseDTO.class);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(resultado.get());
 
     }
 
     @PostMapping
-    public ResponseEntity<Servico> insert(@RequestBody @Valid Servico body) {
-        var salvo = servicoRepository.save(body);
-        return ResponseEntity.ok(salvo);
+    public ResponseEntity<ServicoResponseDTO> insert(@RequestBody @Valid ServicoInsertDTO body) {
+
+        return ResponseEntity.ok(servicoService.insert(body));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Servico> update(@PathVariable Long id, @RequestBody Servico body) {
-        var resultado = servicoRepository.findById(id);
-        if(resultado.isEmpty()) return ResponseEntity.notFound().build();
+    public ResponseEntity<ServicoResponseDTO> update(@PathVariable Long id, @RequestBody ServicoResponseDTO body) {
 
         body.setId(id);
+        var resultado = servicoService.update(body);
+        if(resultado.isEmpty()) return ResponseEntity.notFound().build();
 
-        var salvo = servicoRepository.save(body);
-        return ResponseEntity.ok(salvo);
+        return ResponseEntity.ok(resultado.get());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Servico> delete(@PathVariable Long id) {
 
-        var resultado = servicoRepository.findById(id);
-        if(resultado.isEmpty()) return ResponseEntity.notFound().build();
-
-        try
-        {
-            servicoRepository.deleteById(id);
-        }
-        catch (org.springframework.dao.DataIntegrityViolationException ex) {
-                System.out.println((ex.toString()));
-               throw new RuntimeException("Existem registros dependentes");
-        }
+        if (!servicoService.delete(id)) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().build();
-
 
     }
 

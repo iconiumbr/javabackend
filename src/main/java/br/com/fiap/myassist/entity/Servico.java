@@ -18,7 +18,6 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="Campo Descrição é obrigatorio")
     @Column(name = "TX_DESCRICAO")
     private String descricao;
 
