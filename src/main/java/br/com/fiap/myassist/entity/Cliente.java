@@ -2,11 +2,14 @@ package br.com.fiap.myassist.entity;
 
 import br.com.fiap.myassist.enums.TipoDocumentoEnum;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TBL_CLIENTE")
 public class Cliente extends Pessoa {
