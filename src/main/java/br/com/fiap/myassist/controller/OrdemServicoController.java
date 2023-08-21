@@ -41,6 +41,7 @@ public class OrdemServicoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<OrdemServicoResponseDTO> finalizar(@PathVariable Long id) {
+        System.out.println("entrei no finalizar");
         var resultado = osService.finalizar(id);
         if (resultado.isEmpty()) {
             return ResponseEntity.notFound().build();
