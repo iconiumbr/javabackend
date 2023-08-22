@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 public class OrdemServicoResponseDTO {
 
-    private Long id;
+    private Integer id;
     private EquipamentoResponseDTO equipamento;
     private ClienteResponseDTO cliente;
 

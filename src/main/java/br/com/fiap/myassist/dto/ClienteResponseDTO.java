@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ClienteResponseDTO {
 
-    private Long id;
+    private Integer id;
     private TipoDocumentoEnum tipoDocumento;
     private String nome;
 

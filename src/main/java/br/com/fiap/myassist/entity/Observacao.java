@@ -17,7 +17,7 @@ public class Observacao {
     @Id
     @Column(name = "ID_OBSERVACAO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "DT_OBSERVACAO")
     private LocalDateTime data;

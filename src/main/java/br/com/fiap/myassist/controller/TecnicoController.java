@@ -1,16 +1,13 @@
 package br.com.fiap.myassist.controller;
 
-import br.com.fiap.myassist.entity.Servico;
 import br.com.fiap.myassist.entity.Tecnico;
-import br.com.fiap.myassist.repository.ServicoRepository;
 import br.com.fiap.myassist.repository.TecnicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/tecnicos")
@@ -19,61 +16,73 @@ public class TecnicoController {
     @Autowired
     private TecnicoRepository tecnicoRepository;
 
-
     @GetMapping
-    public List<Tecnico> findAll(@RequestParam(required = false) String email) {
+    public Page<Tecnico> listarTodos(@RequestParam(required = false) String email,
+                                     @RequestParam(defaultValue = "0") int pagina,
+                                     @RequestParam(defaultValue = "5") int tamanho) {
+        var pageRequest = PageRequest.of(pagina, tamanho);
 
-        if(email==null || email.isBlank()) return tecnicoRepository.findAll();
-        return tecnicoRepository.findByEmail(email);
+        if (email == null) {
+            return tecnicoRepository.findAll(pageRequest);
+        }
+
+        return tecnicoRepository.findByEmail(email, pageRequest);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tecnico> findById(@PathVariable Long id) {
+    public ResponseEntity<Tecnico> buscarPorId(@PathVariable Integer id) {
         var resultado = tecnicoRepository.findById(id);
-        if(resultado.isEmpty()) {
+        if (resultado.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(resultado.get());
-
     }
 
-
-
-
     @PostMapping
-    public ResponseEntity<Tecnico> insert(@RequestBody @Valid Tecnico body) {
-        var salvo = tecnicoRepository.save(body);
+    public ResponseEntity<Tecnico> inserir(@RequestBody @Valid Tecnico tecnico) {
+        var existe = tecnicoRepository.findByEmail(tecnico.getEmail());
+        if (existe.isPresent()) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+        var salvo = tecnicoRepository.save(tecnico);
         return ResponseEntity.ok(salvo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tecnico> update(@PathVariable Long id, @RequestBody Tecnico body) {
+    public ResponseEntity<Tecnico> atualizar(@PathVariable Integer id,
+                                             @RequestBody @Valid Tecnico body) {
         var resultado = tecnicoRepository.findById(id);
-        if(resultado.isEmpty()) return ResponseEntity.notFound().build();
+        if (resultado.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
-        body.setId(id);
+        var existente = tecnicoRepository.findByEmailIgnoreCaseAndIdNot(body.getEmail(), id);
+        if (!existente.isEmpty()) {
+            throw new RuntimeException("Já existe um e-mail cadastrado");
+        }
 
         var salvo = tecnicoRepository.save(body);
         return ResponseEntity.ok(salvo);
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Tecnico> delete(@PathVariable Long id) {
-
+    public ResponseEntity excluir(@PathVariable Integer id) {
         var resultado = tecnicoRepository.findById(id);
-        if(resultado.isEmpty()) return ResponseEntity.notFound().build();
+        if (resultado.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
-        try
-        {
-            tecnicoRepository.deleteById(id);
+        var existeOS = tecnicoRepository.findOrdensServicoBy(id);
+        if (!existeOS.isEmpty()) {
+            throw new RuntimeException("Técnico com OS vinculada.");
         }
-        catch (org.springframework.dao.DataIntegrityViolationException ex) {
-                System.out.println((ex.toString()));
-               throw new RuntimeException("Existem registros dependentes");
-        }
+
+        tecnicoRepository.deleteById(id);
         return ResponseEntity.ok().build();
-
-
     }
+
+
+
 
 }

@@ -1,5 +1,3 @@
-
-
 package br.com.fiap.myassist.controller;
 
 import br.com.fiap.myassist.enums.TipoEquipamentoEnum;
@@ -14,7 +12,6 @@ import java.util.List;
 @RequestMapping("/equipamentos")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class EquipamentoController {
-
     @GetMapping("/tipos")
     public List<TipoEquipamentoEnum> getTiposEquipamento() {
         return List.of(TipoEquipamentoEnum.values());

@@ -2,7 +2,10 @@ package br.com.fiap.myassist.entity;
 
 import br.com.fiap.myassist.enums.TipoDocumentoEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -17,7 +20,7 @@ public class Cliente extends Pessoa {
     @Id
     @Column(name = "ID_CLIENTE")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "TX_DOCUMENTO")
     private String documento;

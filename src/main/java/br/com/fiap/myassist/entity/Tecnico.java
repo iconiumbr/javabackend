@@ -13,9 +13,6 @@ public class Tecnico extends Pessoa {
     @Id
     @Column(name = "ID_TECNICO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "TX_NOME")
-    private String nome;
+    private Integer id;
 
 }

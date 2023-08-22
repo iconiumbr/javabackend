@@ -14,7 +14,7 @@ public class Equipamento {
     @Id
     @Column(name = "ID_EQUIPAMENTO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "TX_MARCA")
     private String marca;

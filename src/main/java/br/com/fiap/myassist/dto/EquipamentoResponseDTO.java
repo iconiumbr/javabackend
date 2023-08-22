@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class EquipamentoResponseDTO {
 
-    private Long id;
+    private Integer id;
     private String numeroSerie;
     private String marca;
     private String modelo;

@@ -1,10 +1,8 @@
--- V1.2__criar_servico_tecnico.sql
 CREATE TABLE TBL_SERVICO
 (
-    ID_SERVICO   NUMBER GENERATED ALWAYS AS IDENTITY,
-    TX_DESCRICAO VARCHAR2(80) NOT NULL,
-    NR_VALOR     NUMBER(19,4) NOT NULL,
-    CONSTRAINT ID_SERVICO PRIMARY KEY (ID_SERVICO)
+    ID_SERVICO   SERIAL PRIMARY KEY,
+    TX_DESCRICAO VARCHAR(80) NOT NULL,
+    NR_VALOR     NUMERIC(19,4) NOT NULL
 );
 
 INSERT INTO TBL_SERVICO(TX_DESCRICAO,NR_VALOR) VALUES ('Formatação de Sistemas Operacionais',50.00);
@@ -22,13 +20,12 @@ INSERT INTO TBL_SERVICO(TX_DESCRICAO,NR_VALOR) VALUES ('Configuração de rotead
 
 CREATE TABLE TBL_TECNICO
 (
-    ID_TECNICO   NUMBER GENERATED ALWAYS AS IDENTITY,
-    TX_NOME      VARCHAR2(45) NOT NULL,
-    TX_AREA_FONE VARCHAR2(2),
-    TX_FONE      VARCHAR2(9),
-    TX_TIPO_FONE VARCHAR2(11),
-    TX_EMAIL     VARCHAR2(50),
-    CONSTRAINT ID_TECNICO PRIMARY KEY (ID_TECNICO)
+    ID_TECNICO   SERIAL PRIMARY KEY,
+    TX_NOME      VARCHAR(45) NOT NULL,
+    TX_AREA_FONE VARCHAR(2),
+    TX_FONE      VARCHAR(9),
+    TX_TIPO_FONE VARCHAR(11),
+    TX_EMAIL     VARCHAR(50)
 );
 
 INSERT INTO TBL_TECNICO(TX_NOME,TX_EMAIL) VALUES ('Rafaela Buainain Luiz','rafa.luiz@myassist.com.br');
@@ -36,5 +33,3 @@ INSERT INTO TBL_TECNICO(TX_NOME,TX_EMAIL) VALUES ('Diogo Castro Lopes','diogo.lo
 INSERT INTO TBL_TECNICO(TX_NOME,TX_EMAIL) VALUES ('Felipe Kenji Yoshida','felipe.yoshida@myassist.com.br');
 INSERT INTO TBL_TECNICO(TX_NOME,TX_EMAIL) VALUES ('Maria Luiza De Sa Barros','maria.barros@myassist.com.br');
 INSERT INTO TBL_TECNICO(TX_NOME,TX_EMAIL) VALUES ('Thiago Costa Torres','thiago.torres@myassist.com.br');
-
----------------------------------------------------------------------------------------
